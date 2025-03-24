@@ -1,3 +1,5 @@
+import java.awt.BorderLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -10,15 +12,13 @@ import javax.swing.JPanel;
  */
 public class ConversionPanel {
     
-    private static final int X_LOC = 100;
-    private static final int Y_LOC = 100;
-    private static final int MAIN_PANEL_HEIGHT = 800;
-    private static final int MAIN_PANEL_WIDTH = 600;
     private JPanel mainPanel;
     private JPanel inputPanel;
     private JPanel outputPanel;
 
     public ConversionPanel() {
+
+        initializeInnerPanels();
 
     }
     private JPanel getMainPanel() {
@@ -28,13 +28,38 @@ public class ConversionPanel {
     }
     private void initializeInnerPanels() {
 
-        
+        initializeInput();
+        initializeOutput();
 
     }
     private void initializeInput() {
 
+        inputPanel = new JPanel();
+        inputPanel.setName("inputPanel");
+
+        JPanel namePanel = new JPanel();
+        namePanel.setName("inNamePanel");
+
+        JLabel nameLabel = new JLabel("Input");
+
+        namePanel.add(nameLabel);
+        inputPanel.add(namePanel, BorderLayout.PAGE_START);
+        mainPanel.add(inputPanel);
+
     }
     private void initializeOutput() {
+
+        outputPanel = new JPanel();
+        outputPanel.setName("outputPanel");
+
+        JPanel namePanel = new JPanel();
+        namePanel.setName("outNamePanel");
+
+        JLabel nameLabel = new JLabel("Output");
+
+        namePanel.add(nameLabel);
+        inputPanel.add(namePanel, BorderLayout.PAGE_START);
+        mainPanel.add(outputPanel);
 
     }
 
