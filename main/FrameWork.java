@@ -1,6 +1,3 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JButton;
 
 /**
  * This class is meant to provide the JFrames in the calculator app
@@ -13,5 +10,7 @@ import javax.swing.JButton;
  * 
  */
 public class FrameWork {
+
+    String y;
 
 }
