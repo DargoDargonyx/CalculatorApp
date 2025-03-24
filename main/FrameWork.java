@@ -8,10 +8,10 @@ import javax.swing.JButton;
  * well as controlling the placement of buttons and such.
  * 
  * @author DargoDargonyx
- * @author ???
- * @version 3/24/2025
+ * @author Tencianity
+ * @version 3.24.2025
  * 
  */
 public class FrameWork {
-
+    String x;
 }
