@@ -1,6 +1,10 @@
-import java.awt.Toolkit;
+package src;
+
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
+
+import ArithmeticPanel;
 
 /**
  * This class is meant to provide the JFrames in the calculator app
