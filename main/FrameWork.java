@@ -1,3 +1,5 @@
+import java.awt.Toolkit;
+import java.awt.Dimension;
 
 /**
  * This class is meant to provide the JFrames in the calculator app
@@ -10,5 +12,18 @@
  * 
  */
 public class FrameWork {
+    // Get the user's screen size and initialize the width and height
+    // to SCREEN_WIDTH and SCREENHEIGHT fields
+    Toolkit toolkit = Toolkit.getDefaultToolkit();
+    Dimension screensize = toolkit.getScreenSize();
+    private final double SCREEN_WIDTH = screensize.getWidth();
+    private final double SCREEN_HEIGHT = screensize.getHeight();
 
+    /**
+     * Create the frame for which 
+     */
+    public void createFrame()
+    {
+
+    }
 }
