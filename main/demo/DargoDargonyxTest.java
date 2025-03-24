@@ -1,16 +1,12 @@
 package demo;
 
-import javax.swing.JFrame;
+import src.FrameWork;
 
 public class DargoDargonyxTest {
-    
-
-    ConversionPanel testMainPanel;
 
     public static void main(String[] args) {
 
-        JFrame testFrame = new JFrame();
-
+        FrameWork testFrame = new FrameWork();
 
     }
 
