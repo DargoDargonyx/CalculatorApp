@@ -1,3 +1,4 @@
+package src;
 import javax.swing.JPanel;
 
 /**
@@ -28,6 +29,7 @@ public class ArithmeticPanel {
 
     private void createMainPanel() {
 
+        mainPanel = new JPanel();
         mainPanel.setName("Arithmetic Panel");
 
     }

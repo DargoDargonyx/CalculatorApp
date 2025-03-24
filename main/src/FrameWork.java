@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 
-import ArithmeticPanel;
-
 /**
  * This class is meant to provide the JFrames in the calculator app
  * that will be built. This includes any tabs needed for the GUI as
@@ -39,6 +37,7 @@ public class FrameWork {
     @SuppressWarnings("static-access")
     public void createFrame() {
 
+        frame = new JFrame();
         frame.setName(NAME);
         frame.setTitle(NAME);
         frame.setLocation(0,0);
