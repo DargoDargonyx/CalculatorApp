@@ -9,19 +9,37 @@ import javax.swing.JPanel;
  * @version 03.24.25
  */
 
-public class FrameArithmetic {
+public class ArithmeticPanel {
     private  static String NAME = "Arithmetic Calculator";
 
     private JPanel mainPanel;
 
-    public FrameArithmetic() {
+    public ArithmeticPanel() {
 
+        createMainPanel();
+        initializeButtons();
+
+    }
+
+    public JPanel getPanel()
+    {
+        return mainPanel;
     }
 
     private void createMainPanel() {
 
         mainPanel.setName("Arithmetic Panel");
-        mainPanel
 
     }
+
+    private void initializeSubPanels() {
+
+        
+
+    }
+
+    private void initializeButtons() {
+
+    }
+
 }
