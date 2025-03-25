@@ -8,6 +8,7 @@ import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 /**
@@ -96,12 +97,8 @@ public class ArithmeticScreen implements Screen {
         // Try to make 0 - 9 buttons in a for loop creating button objects with name and function
         // linked to incrementing variable "i"
 
-        // for (i from 0 to 9)
-        // make new button
-        // set button name to (str) i
-        // format button
-        // make button function add [(str) i] to input text box
         for (int i = 1; i <= 9; i++) {
+
             String num = Integer.toString(i); // get i as a string
 
             // Create new button with text i as the label
@@ -116,7 +113,9 @@ public class ArithmeticScreen implements Screen {
                     inputJTextField.setText(inputJTextField.getText() + num);
                 }
             });
+            buttonJPanel.setLayout(new GridLayout());
             buttonJPanel.add(button); // Add button to buttonJPanel
+            
         }
 
         // "+" Button
@@ -127,7 +126,8 @@ public class ArithmeticScreen implements Screen {
         // "power (exponent)" Button
 
         // "=" Button
-        mainPanel.add(buttonJPanel);
+
+        mainPanel.add(buttonJPanel); // Add buttonJPanel to mainPanel
     }
 
     public void updateResult(String result) {

@@ -15,14 +15,14 @@ import javax.swing.border.Border;
  * @author Tencianity
  * @version 03.24.25
  */
-public class ConversionPanel implements Screen {
+public class ConversionScreen implements Screen {
     
     private JPanel mainPanel;
     private JPanel inputPanel;
     private JPanel outputPanel;
     private Border border;
 
-    public ConversionPanel() {
+    public ConversionScreen() {
 
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());

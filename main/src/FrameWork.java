@@ -25,7 +25,7 @@ public class FrameWork {
 
     private JFrame mainFrame; // Main frame
     private static final String NAME = "Calculator";
-    private ArithmeticPanel arithmeticScreen;
+    private ArithmeticScreen arithmeticScreen;
     private JPanel conversionPanel;
 
     /**
@@ -70,7 +70,7 @@ public class FrameWork {
     public void appendPanelsToFrame(GridBagConstraints gbc) {
 
         // Create arithmetic screen and add to frame
-        arithmeticScreen = new ArithmeticPanel();
+        arithmeticScreen = new ArithmeticScreen();
         arithmeticScreen.getScreen().setLayout(new GridBagLayout()); // Changed getPanel to getScreen cause that makes more sense
         gbc.weightx = 0.5;
         gbc.weighty = 1.0;
@@ -80,7 +80,7 @@ public class FrameWork {
 
         // fuck me. - Chris
         // bet.     - Aren
-        ConversionPanel conversionScreen = new ConversionPanel();
+        ConversionScreen conversionScreen = new ConversionScreen();
         conversionPanel = conversionScreen.getMainPanel();
         conversionPanel.setLayout(new GridBagLayout());
         gbc.weightx = 0.5;
