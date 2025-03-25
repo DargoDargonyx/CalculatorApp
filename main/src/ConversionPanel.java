@@ -1,8 +1,11 @@
 package src;
 
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 /**
  * This class is used to make the currency conversion portion
@@ -17,13 +20,18 @@ public class ConversionPanel {
     private JPanel mainPanel;
     private JPanel inputPanel;
     private JPanel outputPanel;
+    private Border border;
 
     public ConversionPanel() {
 
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridBagLayout());
+        border = BorderFactory.createLineBorder(Color.BLACK, 2);
+        mainPanel.setBorder(border);
         initializeInnerPanels();
 
     }
-    private JPanel getMainPanel() {
+    public JPanel getMainPanel() {
 
         return this.mainPanel;
 
@@ -31,37 +39,72 @@ public class ConversionPanel {
     private void initializeInnerPanels() {
 
         initializeInput();
-        initializeOutput();
+        //initializeOutput();
 
     }
     private void initializeInput() {
 
+        GridBagConstraints gbcInput = new GridBagConstraints();
         inputPanel = new JPanel();
         inputPanel.setName("inputPanel");
 
-        JPanel namePanel = new JPanel();
-        namePanel.setName("inNamePanel");
+        border = BorderFactory.createLineBorder(Color.BLUE, 1);
+        inputPanel.setBorder(border);
+        gbcInput.weightx = 1.0;
+        gbcInput.weighty = 0.5;
+        gbcInput.fill = GridBagConstraints.BOTH;;
 
+        /*
+        GridBagConstraints gbcLabel = new GridBagConstraints();
         JLabel nameLabel = new JLabel("Input");
-
-        namePanel.add(nameLabel);
-        inputPanel.add(namePanel, BorderLayout.PAGE_START);
-        mainPanel.add(inputPanel);
-
-    }
-    private void initializeOutput() {
-
+        border = BorderFactory.createLineBorder(Color.RED, 1);
+        nameLabel.setBorder(border);
+        gbcLabel.gridx = 1;
+        gbcLabel.gridy = 1;
+        gbcLabel.fill = GridBagConstraints.BOTH;
+        inputPanel.add(nameLabel, gbcLabel);
+        */
+        
+        GridBagConstraints gbcOutput = new GridBagConstraints();
         outputPanel = new JPanel();
         outputPanel.setName("outputPanel");
 
-        JPanel namePanel = new JPanel();
-        namePanel.setName("outNamePanel");
+        border = BorderFactory.createLineBorder(Color.BLUE, 1);
+        outputPanel.setBorder(border);
+        gbcOutput.weightx = 1.0;
+        gbcOutput.weighty = 0.5;
+        gbcOutput.fill = GridBagConstraints.BOTH;
 
+        mainPanel.add(outputPanel, gbcOutput);
+        mainPanel.add(inputPanel, gbcInput);
+        
+        
+    }
+
+    private void initializeOutput() {
+
+        GridBagConstraints gbcOutput = new GridBagConstraints();
+        outputPanel = new JPanel();
+        outputPanel.setName("outputPanel");
+
+        border = BorderFactory.createLineBorder(Color.BLUE, 1);
+        outputPanel.setBorder(border);
+        gbcOutput.weightx = 1.0;
+        gbcOutput.weighty = 0.5;
+        gbcOutput.fill = GridBagConstraints.BOTH;
+        
+        /*
         JLabel nameLabel = new JLabel("Output");
+        GridBagConstraints gbcLabel = new GridBagConstraints();
+        border = BorderFactory.createLineBorder(Color.RED, 1);
+        nameLabel.setBorder(border);
+        gbcLabel.gridx = 1;
+        gbcLabel.gridy = 1;
+        gbcLabel.fill = GridBagConstraints.BOTH;
+        outputPanel.add(nameLabel, gbcLabel);
+        */
 
-        namePanel.add(nameLabel);
-        inputPanel.add(namePanel, BorderLayout.PAGE_START);
-        mainPanel.add(outputPanel);
+        mainPanel.add(outputPanel, gbcOutput);
 
     }
 

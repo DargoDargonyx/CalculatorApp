@@ -1,8 +1,11 @@
 package src;
 
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * This class is meant to provide the JFrames in the calculator app
@@ -15,47 +18,83 @@ import javax.swing.JFrame;
  * 
  */
 public class FrameWork {
+
     // Get the user's screen size and save it as a Dimension object
-    Toolkit toolkit = Toolkit.getDefaultToolkit();
-    Dimension screensize = toolkit.getScreenSize();
+    private final Toolkit toolkit = Toolkit.getDefaultToolkit();
+    private final Dimension screensize = toolkit.getScreenSize();
 
-    private static String NAME = "Calculator";
-    // Main frame
-    private JFrame frame;
+    private JFrame mainFrame; // Main frame
+    private static final String NAME = "Calculator";
+    private ArithmeticPanel arithmeticScreen;
+    private JPanel conversionPanel;
 
+    /**
+     * This is the no argument constructor for the class that
+     * will create the main frame, then add the panels to the
+     * frame, and then making everything visible.
+     * 
+     */
     public FrameWork() {
 
+        GridBagConstraints gbc = new GridBagConstraints(); // Used to edit the layout of the panels
         createFrame();
-        appendPanelsToFrame();
+        appendPanelsToFrame(gbc);
         displayFrame();
 
     }
 
     /**
-     * Create the main frame out of panels pulled from different calculator classes.
+     * This method creates the main frame out of panels pulled 
+     * from different the seperate calculator classes.
+     * 
      */
     @SuppressWarnings("static-access")
     public void createFrame() {
 
-        frame = new JFrame();
-        frame.setName(NAME);
-        frame.setTitle(NAME);
-        frame.setLocation(0,0);
-        frame.setSize(screensize);
-        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        mainFrame = new JFrame(NAME);
+        mainFrame.setName(NAME);
+        mainFrame.setLayout(new GridBagLayout());
+
+        mainFrame.setLocation(0,0);
+        mainFrame.setSize(screensize);
+
+        mainFrame.setDefaultCloseOperation(mainFrame.EXIT_ON_CLOSE);
 
     }
 
     /**
-     * Adds all required panels to the main frame, starting on the arithmentic screen.
+     * Adds all required panels to the main frame, starting on the
+     * arithmentic screen.
+     * 
      */
-    public void appendPanelsToFrame() {
+    public void appendPanelsToFrame(GridBagConstraints gbc) {
 
-        ArithmeticPanel arithmeticScreen = new ArithmeticPanel();
-        frame.add(arithmeticScreen.getPanel());
+        arithmeticScreen = new ArithmeticPanel();
+        arithmeticScreen.getPanel().setLayout(new GridBagLayout());
+        gbc.weightx = 0.5;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        mainFrame.add(arithmeticScreen.getPanel(), gbc);
+
+
+        // fuck me.
+        ConversionPanel conversionScreen = new ConversionPanel();
+        conversionPanel = conversionScreen.getMainPanel();
+        conversionPanel.setLayout(new GridBagLayout());
+        gbc.weightx = 0.5;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        mainFrame.add(conversionPanel, gbc);
 
     }
 
-    public void displayFrame() 
-    {frame.setVisible(true);}
+    /**
+     * This method sets the main frame and everything inside visible
+     * 
+     */
+    public void displayFrame() {
+        
+        mainFrame.setVisible(true);
+
+    }
 }
