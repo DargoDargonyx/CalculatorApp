@@ -15,7 +15,7 @@ import javax.swing.border.Border;
  * @author Tencianity
  * @version 03.24.25
  */
-public class ConversionPanel {
+public class ConversionPanel implements Screen {
     
     private JPanel mainPanel;
     private JPanel inputPanel;

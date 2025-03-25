@@ -31,7 +31,7 @@ public class FrameWork {
     /**
      * This is the no argument constructor for the class that
      * will create the main frame, then add the panels to the
-     * frame, and then making everything visible.
+     * frame, then make everything visible.
      * 
      */
     public FrameWork() {
@@ -45,7 +45,7 @@ public class FrameWork {
 
     /**
      * This method creates the main frame out of panels pulled 
-     * from different the seperate calculator classes.
+     * from the seperate calculator classes.
      * 
      */
     @SuppressWarnings("static-access")
@@ -65,19 +65,21 @@ public class FrameWork {
     /**
      * Adds all required panels to the main frame, starting on the
      * arithmentic screen.
-     * 
+     * [Later make navigable from Arithmetic screen to Conversion screen.]
      */
     public void appendPanelsToFrame(GridBagConstraints gbc) {
 
+        // Create arithmetic screen and add to frame
         arithmeticScreen = new ArithmeticPanel();
-        arithmeticScreen.getPanel().setLayout(new GridBagLayout());
+        arithmeticScreen.getScreen().setLayout(new GridBagLayout()); // Changed getPanel to getScreen cause that makes more sense
         gbc.weightx = 0.5;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        mainFrame.add(arithmeticScreen.getPanel(), gbc);
+        mainFrame.add(arithmeticScreen.getScreen(), gbc);
 
 
-        // fuck me.
+        // fuck me. - Chris
+        // bet.     - Aren
         ConversionPanel conversionScreen = new ConversionPanel();
         conversionPanel = conversionScreen.getMainPanel();
         conversionPanel.setLayout(new GridBagLayout());
