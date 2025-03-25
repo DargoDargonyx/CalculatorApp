@@ -63,7 +63,7 @@ public class ArithmeticPanel implements Screen {
 
         // Create JTextField and add to inputJPanel
         JTextField inputJTextField = new JTextField(10);
-        inputJTextField.addActionListener(ButtonActionListener);
+        // inputJTextField.addActionListener(new ButtonActionListener(0));
         inputJPanel.add(inputJTextField);
 
         // Add all subpanels to main panel
