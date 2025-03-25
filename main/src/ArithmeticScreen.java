@@ -1,13 +1,17 @@
 package src;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,7 +33,7 @@ public class ArithmeticScreen implements Screen {
 
     private JPanel outputJPanel;
     private JLabel resultJLabel;
-    private static String resultPreamble = "Result\n>>>";
+    private static String resultPreamble = "Result: ";
 
     private JPanel buttonJPanel;
 
@@ -90,19 +94,36 @@ public class ArithmeticScreen implements Screen {
     }
 
     private void initializeButtons() {
+
+        
         // Create button panel
         buttonJPanel = new JPanel();
         buttonJPanel.setName("buttonPanel");
+        
+        JPanel biggerJPanel = new JPanel();
+        biggerJPanel.setLayout(new BoxLayout(biggerJPanel, BoxLayout.Y_AXIS));
+        
+        /* Try to make 0 - 9 buttons in a for loop creating button objects with name and function
+        linked to incrementing variable "i" */
+        
+        buttonJPanel.setLayout(new GridLayout(3, 3));
+        String num = "";
+        for (int i = 1; i <= 10; i++) {
 
-        // Try to make 0 - 9 buttons in a for loop creating button objects with name and function
-        // linked to incrementing variable "i"
-
-        for (int i = 1; i <= 9; i++) {
-
-            String num = Integer.toString(i); // get i as a string
+            // Create "0" button when i hits 10 so it appears as last button on buttonJPanel
+            if (i == 10) {
+                num = "0";
+            }
+            else {
+                num = Integer.toString(i);
+            }
 
             // Create new button with text i as the label
             JButton button = new JButton(num);
+
+            /* Have to do this shit for some reason to be able to use the num variable in the addActionListener class;
+            Compilation error otherwise, but just sets a new variable called "numb" equal to the variable "num" */
+            String numb = num;
 
             button.addActionListener(new ActionListener() {
                 /**
@@ -110,12 +131,17 @@ public class ArithmeticScreen implements Screen {
                  * @param event The event that occurs
                  */
                 public void actionPerformed(ActionEvent event) {
-                    inputJTextField.setText(inputJTextField.getText() + num);
+                    inputJTextField.setText(inputJTextField.getText() + numb);
+                    System.out.println(button.getSize());
                 }
             });
-            buttonJPanel.setLayout(new GridLayout());
-            buttonJPanel.add(button); // Add button to buttonJPanel
-            
+
+            if (i == 10){
+                biggerJPanel.add(buttonJPanel);
+                biggerJPanel.add(button);
+                break;
+            }
+            buttonJPanel.add(button); // Add created button to buttonJPanel
         }
 
         // "+" Button
@@ -127,7 +153,8 @@ public class ArithmeticScreen implements Screen {
 
         // "=" Button
 
-        mainPanel.add(buttonJPanel); // Add buttonJPanel to mainPanel
+        biggerJPanel.setBackground(Color.BLUE);
+        mainPanel.add(biggerJPanel); // Add biggerJPanel to mainPanel
     }
 
     public void updateResult(String result) {
