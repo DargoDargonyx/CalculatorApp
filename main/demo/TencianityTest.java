@@ -18,8 +18,10 @@ public class TencianityTest {
     }
 
     public static void openCalculator(int tabs) {
+
         for (int i = 0; i < tabs; i++) {
             new FrameWork();
         }
+        
     } 
 }
