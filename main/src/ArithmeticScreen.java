@@ -1,4 +1,8 @@
 package src;
+import javax.script.Compilable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -39,15 +43,15 @@ public class ArithmeticScreen implements Screen {
     private String result;
 
     private JPanel buttonJPanel;
-
     private JPanel biggerJPanel;
+    private JPanel operatorJPanel;
 
     public ArithmeticScreen() {
 
         // Must be in this order (I think)
         createMainPanel();
-        initializeSubPanels();
         initializeButtons();
+        initializeSubPanels();
 
     }
 
@@ -157,6 +161,9 @@ public class ArithmeticScreen implements Screen {
             }
         }
 
+        operatorJPanel = new JPanel();
+        operatorJPanel.setName("operatorPanel");
+
         // "+" Button
         // "-" Button
         // "*" Button
@@ -166,6 +173,8 @@ public class ArithmeticScreen implements Screen {
 
         // "=" Button
         JButton equalsButton = new JButton();
+        equalsButton.setName("Equals");
+        equalsButton.setText("Equals");
         equalsButton.addActionListener(new ActionListener() {
 
             /**
@@ -173,11 +182,15 @@ public class ArithmeticScreen implements Screen {
              * @param event Button is pressed
              */
             public void actionPerformed(ActionEvent event) {
+                System.out.print(inputJTextField.getText() + " = ");
                 updateResult();
+                System.out.println(result);
             }
+
         });
 
         mainPanel.add(biggerJPanel); // Add biggerJPanel to mainPanel
+        mainPanel.add(equalsButton); // Add equalsButton to mainPanel
     }
 
     public void updateResult() {
@@ -186,21 +199,13 @@ public class ArithmeticScreen implements Screen {
     }
 
     public String calculateString() {
-        String ans = "";
-        String equation = inputJTextField.getText();
         
-        Double[] numbers = new Double[equation.length()];
-        // Places every number in the inputted equation into an array of doubles 
-        for (int i = 0; i < equation.length(); i++) {
+        
 
-            try {
-                numbers[i] = Double.parseDouble(String.valueOf(equation.charAt(i)));
-            } catch (NumberFormatException e) {
-                // pass
-            }
+    }
 
-        }
-
-        return ans;
+    public Double charToDouble(char c)
+    {
+        return Double.parseDouble(String.valueOf(c));
     }
 }
