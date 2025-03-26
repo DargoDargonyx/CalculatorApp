@@ -82,6 +82,7 @@ public class FrameWork {
     public void displayFrame() {
         
         mainFrame.setVisible(true);
+        mainFrame.pack();
 
     }
 }

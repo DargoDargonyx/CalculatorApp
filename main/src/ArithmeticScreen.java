@@ -177,8 +177,6 @@ public class ArithmeticScreen implements Screen {
             }
         });
 
-
-        biggerJPanel.setBackground(Color.BLUE);
         mainPanel.add(biggerJPanel); // Add biggerJPanel to mainPanel
     }
 
