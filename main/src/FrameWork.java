@@ -1,11 +1,11 @@
 package src;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 /**
  * This class is meant to provide the JFrames in the calculator app
@@ -25,8 +25,6 @@ public class FrameWork {
 
     private JFrame mainFrame; // Main frame
     private static final String NAME = "Calculator";
-    private ArithmeticScreen arithmeticScreen;
-    private JPanel conversionPanel;
 
     /**
      * This is the no argument constructor for the class that
@@ -53,7 +51,7 @@ public class FrameWork {
 
         mainFrame = new JFrame(NAME);
         mainFrame.setName(NAME);
-        mainFrame.setLayout(new GridBagLayout());
+        mainFrame.setLayout(new BorderLayout());
 
         mainFrame.setLocation(0,0);
         mainFrame.setSize(screensize);
@@ -63,30 +61,17 @@ public class FrameWork {
     }
 
     /**
-     * Adds all required panels to the main frame, starting on the
-     * arithmentic screen.
-     * [Later make navigable from Arithmetic screen to Conversion screen.]
+     * Adds all required panels to the main frame using tabs.
+     * 
      */
     public void appendPanelsToFrame(GridBagConstraints gbc) {
 
-        // Create arithmetic screen and add to frame
-        arithmeticScreen = new ArithmeticScreen();
-        arithmeticScreen.getScreen().setLayout(new GridBagLayout()); // Changed getPanel to getScreen cause that makes more sense
-        gbc.weightx = 0.5;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        mainFrame.add(arithmeticScreen.getScreen(), gbc);
-
-
-        // fuck me. - Chris
-        // bet.     - Aren
         ConversionScreen conversionScreen = new ConversionScreen();
-        conversionPanel = conversionScreen.getMainPanel();
-        conversionPanel.setLayout(new GridBagLayout());
-        gbc.weightx = 0.5;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        mainFrame.add(conversionPanel, gbc);
+        ArithmeticScreen arithmeticScreen = new ArithmeticScreen();
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.add("Arithemtic", arithmeticScreen.getScreen());
+        tabbedPane.add("Conversion", conversionScreen.getScreen());
+        mainFrame.add(tabbedPane, BorderLayout.CENTER);
 
     }
 

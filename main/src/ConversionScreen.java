@@ -1,9 +1,12 @@
 package src;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Panel;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -17,66 +20,40 @@ import javax.swing.border.Border;
  */
 public class ConversionScreen implements Screen {
     
-    private JPanel mainPanel;
+    private JPanel screen;
     private JPanel inputPanel;
     private JPanel outputPanel;
     private Border border;
 
     public ConversionScreen() {
 
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new GridBagLayout());
+        screen = new JPanel();
+        screen.setLayout(new BoxLayout(screen, BoxLayout.Y_AXIS));
         border = BorderFactory.createLineBorder(Color.BLACK, 2);
-        mainPanel.setBorder(border);
+        screen.setBorder(border);
         initializeInnerPanels();
 
     }
-    public JPanel getMainPanel() {
+    public JPanel getScreen() {
 
-        return this.mainPanel;
+        return this.screen;
 
     }
     private void initializeInnerPanels() {
 
         initializeInput();
-        //initializeOutput();
+        initializeOutput();
 
     }
     private void initializeInput() {
 
-        GridBagConstraints gbcInput = new GridBagConstraints();
         inputPanel = new JPanel();
         inputPanel.setName("inputPanel");
 
         border = BorderFactory.createLineBorder(Color.BLUE, 1);
         inputPanel.setBorder(border);
-        gbcInput.weightx = 1.0;
-        gbcInput.weighty = 0.5;
-        gbcInput.fill = GridBagConstraints.BOTH;;
 
-        /*
-        GridBagConstraints gbcLabel = new GridBagConstraints();
-        JLabel nameLabel = new JLabel("Input");
-        border = BorderFactory.createLineBorder(Color.RED, 1);
-        nameLabel.setBorder(border);
-        gbcLabel.gridx = 1;
-        gbcLabel.gridy = 1;
-        gbcLabel.fill = GridBagConstraints.BOTH;
-        inputPanel.add(nameLabel, gbcLabel);
-        */
-        
-        GridBagConstraints gbcOutput = new GridBagConstraints();
-        outputPanel = new JPanel();
-        outputPanel.setName("outputPanel");
-
-        border = BorderFactory.createLineBorder(Color.BLUE, 1);
-        outputPanel.setBorder(border);
-        gbcOutput.weightx = 1.0;
-        gbcOutput.weighty = 0.5;
-        gbcOutput.fill = GridBagConstraints.BOTH;
-
-        mainPanel.add(outputPanel, gbcOutput);
-        mainPanel.add(inputPanel, gbcInput);
+        screen.add(inputPanel);
         
         
     }
@@ -89,22 +66,8 @@ public class ConversionScreen implements Screen {
 
         border = BorderFactory.createLineBorder(Color.BLUE, 1);
         outputPanel.setBorder(border);
-        gbcOutput.weightx = 1.0;
-        gbcOutput.weighty = 0.5;
-        gbcOutput.fill = GridBagConstraints.BOTH;
-        
-        /*
-        JLabel nameLabel = new JLabel("Output");
-        GridBagConstraints gbcLabel = new GridBagConstraints();
-        border = BorderFactory.createLineBorder(Color.RED, 1);
-        nameLabel.setBorder(border);
-        gbcLabel.gridx = 1;
-        gbcLabel.gridy = 1;
-        gbcLabel.fill = GridBagConstraints.BOTH;
-        outputPanel.add(nameLabel, gbcLabel);
-        */
 
-        mainPanel.add(outputPanel, gbcOutput);
+        screen.add(outputPanel);
 
     }
 
