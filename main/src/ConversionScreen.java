@@ -2,12 +2,9 @@ package src;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Panel;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.border.Border;
 
 /**
@@ -18,7 +15,7 @@ import javax.swing.border.Border;
  * @author Tencianity
  * @version 03.24.25
  */
-public class ConversionScreen implements Screen {
+public class ConversionScreen {
     
     private JPanel screen;
     private JPanel inputPanel;
@@ -28,7 +25,7 @@ public class ConversionScreen implements Screen {
     public ConversionScreen() {
 
         screen = new JPanel();
-        screen.setLayout(new BoxLayout(screen, BoxLayout.Y_AXIS));
+        screen.setLayout(new BorderLayout());
         border = BorderFactory.createLineBorder(Color.BLACK, 2);
         screen.setBorder(border);
         initializeInnerPanels();
@@ -43,6 +40,11 @@ public class ConversionScreen implements Screen {
 
         initializeInput();
         initializeOutput();
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, inputPanel, outputPanel);
+        splitPane.setResizeWeight(0.7);
+        splitPane.setDividerLocation(0.7);
+        splitPane.setDividerSize(1);
+        screen.add(splitPane, BorderLayout.CENTER);
 
     }
     private void initializeInput() {
@@ -52,22 +54,16 @@ public class ConversionScreen implements Screen {
 
         border = BorderFactory.createLineBorder(Color.BLUE, 1);
         inputPanel.setBorder(border);
-
-        screen.add(inputPanel);
-        
         
     }
 
     private void initializeOutput() {
 
-        GridBagConstraints gbcOutput = new GridBagConstraints();
         outputPanel = new JPanel();
         outputPanel.setName("outputPanel");
 
         border = BorderFactory.createLineBorder(Color.BLUE, 1);
         outputPanel.setBorder(border);
-
-        screen.add(outputPanel);
 
     }
 
