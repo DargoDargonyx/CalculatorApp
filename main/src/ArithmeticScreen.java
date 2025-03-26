@@ -35,7 +35,8 @@ public class ArithmeticScreen implements Screen {
 
     private JPanel outputJPanel;
     private JLabel resultJLabel;
-    private static String resultPreamble = "Result: ";
+    private static final String resultPreamble = "Result: ";
+    private String result;
 
     private JPanel buttonJPanel;
 
@@ -97,6 +98,7 @@ public class ArithmeticScreen implements Screen {
 
     }
 
+    @SuppressWarnings("static-access")
     private void initializeButtons() {
 
         
@@ -107,7 +109,7 @@ public class ArithmeticScreen implements Screen {
         
         biggerJPanel = new JPanel();
         biggerJPanel.setName("biggerPanel");
-        biggerJPanel.setLayout(new GridBagLayout());
+        biggerJPanel.setLayout(new BoxLayout(biggerJPanel, BoxLayout.Y_AXIS));
 
         GridBagConstraints g = new GridBagConstraints();
         
@@ -147,6 +149,7 @@ public class ArithmeticScreen implements Screen {
                 biggerJPanel.add(buttonJPanel);
                 button.setSize(new Dimension(123, 26));
                 biggerJPanel.add(button, g.gridy);
+                button.setAlignmentX(biggerJPanel.CENTER_ALIGNMENT); // Align "0" button to the center of biggerJPanel
                 break;
             }
             else {
@@ -162,12 +165,44 @@ public class ArithmeticScreen implements Screen {
         // "power (exponent)" Button
 
         // "=" Button
+        JButton equalsButton = new JButton();
+        equalsButton.addActionListener(new ActionListener() {
+
+            /**
+             * 
+             * @param event Button is pressed
+             */
+            public void actionPerformed(ActionEvent event) {
+                updateResult();
+            }
+        });
+
 
         biggerJPanel.setBackground(Color.BLUE);
         mainPanel.add(biggerJPanel); // Add biggerJPanel to mainPanel
     }
 
-    public void updateResult(String result) {
+    public void updateResult() {
+        result = calculateString();
         resultJLabel.setText(resultPreamble + result);
+    }
+
+    public String calculateString() {
+        String ans = "";
+        String equation = inputJTextField.getText();
+        
+        Double[] numbers = new Double[equation.length()];
+        // Places every number in the inputted equation into an array of doubles 
+        for (int i = 0; i < equation.length(); i++) {
+
+            try {
+                numbers[i] = Double.parseDouble(String.valueOf(equation.charAt(i)));
+            } catch (NumberFormatException e) {
+                // pass
+            }
+
+        }
+
+        return ans;
     }
 }
