@@ -12,6 +12,7 @@ import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -102,19 +103,20 @@ public class ArithmeticScreen implements Screen {
         // Create button panel
         buttonJPanel = new JPanel();
         buttonJPanel.setName("buttonPanel");
+        buttonJPanel.setLayout(new GridLayout(3, 3));
         
         biggerJPanel = new JPanel();
         biggerJPanel.setName("biggerPanel");
         biggerJPanel.setLayout(new GridBagLayout());
+
+        GridBagConstraints g = new GridBagConstraints();
         
-        /* Try to make 0 - 9 buttons in a for loop creating button objects with name and function
+        /* Make 0 - 9 buttons in a for loop creating button objects with name and function
         linked to incrementing variable "i" */
-        
-        buttonJPanel.setLayout(new GridLayout(3, 3));
         String num = "";
         for (int i = 1; i <= 10; i++) {
 
-            // Create "0" button when i hits 10 so it appears as last button on buttonJPanel
+            // Create "0" button when i is 10 so it is the last button created and placed into panel
             if (i == 10) {
                 num = "0";
             }
@@ -122,7 +124,7 @@ public class ArithmeticScreen implements Screen {
                 num = Integer.toString(i);
             }
 
-            // Create new button with text i as the label
+            // Create new button with String num as the label
             JButton button = new JButton(num);
 
             /* Have to do this shit for some reason to be able to use the num variable in the addActionListener class;
@@ -140,13 +142,16 @@ public class ArithmeticScreen implements Screen {
                 }
             });
 
-            if (i == 10){
+            // Place the zero button into the bigger panel seperately from the rest of the number panel
+            if (i == 10) {
                 biggerJPanel.add(buttonJPanel);
-                button.setPreferredSize(new Dimension(123, 24));
-                biggerJPanel.add(button);
+                button.setSize(new Dimension(123, 26));
+                biggerJPanel.add(button, g.gridy);
                 break;
             }
-            buttonJPanel.add(button); // Add created button to buttonJPanel
+            else {
+                buttonJPanel.add(button, g); // Add created button to buttonJPanel
+            }
         }
 
         // "+" Button

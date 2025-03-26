@@ -9,8 +9,7 @@ package demo;
 import src.FrameWork;
 
 public class TencianityTest {
-    public static void main (String[] args)
-    {
+    public static void main (String[] args) {
         FrameWork myFrame = new FrameWork();
     }
 }
