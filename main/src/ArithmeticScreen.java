@@ -10,6 +10,7 @@ import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -36,6 +37,8 @@ public class ArithmeticScreen implements Screen {
     private static String resultPreamble = "Result: ";
 
     private JPanel buttonJPanel;
+
+    private JPanel biggerJPanel;
 
     public ArithmeticScreen() {
 
@@ -100,8 +103,9 @@ public class ArithmeticScreen implements Screen {
         buttonJPanel = new JPanel();
         buttonJPanel.setName("buttonPanel");
         
-        JPanel biggerJPanel = new JPanel();
-        biggerJPanel.setLayout(new BoxLayout(biggerJPanel, BoxLayout.Y_AXIS));
+        biggerJPanel = new JPanel();
+        biggerJPanel.setName("biggerPanel");
+        biggerJPanel.setLayout(new GridBagLayout());
         
         /* Try to make 0 - 9 buttons in a for loop creating button objects with name and function
         linked to incrementing variable "i" */
@@ -138,6 +142,7 @@ public class ArithmeticScreen implements Screen {
 
             if (i == 10){
                 biggerJPanel.add(buttonJPanel);
+                button.setPreferredSize(new Dimension(123, 24));
                 biggerJPanel.add(button);
                 break;
             }
