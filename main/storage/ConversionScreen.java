@@ -30,7 +30,6 @@ public class ConversionScreen {
     private Border border;
     private boolean sideBarVisible;
 
-
     /**
      * This is the constructor for the class and it sets a border for
      * visibility as well initializing all the inner panels and adding
