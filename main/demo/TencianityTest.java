@@ -10,10 +10,10 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import src.FrameWork;
+import storage.FrameWork;
 
 public class TencianityTest {
-    public static void main (String[] args) throws ScriptException {\
+    public static void main (String[] args) throws ScriptException {
         openCalculator(1);
     }
 
