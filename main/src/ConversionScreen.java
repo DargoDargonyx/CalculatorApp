@@ -2,6 +2,8 @@ package src;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -35,16 +37,30 @@ public class ConversionScreen {
 
         return this.screen;
 
-    }
+    } 
     private void initializeInnerPanels() {
 
         initializeInput();
         initializeOutput();
+
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, inputPanel, outputPanel);
         splitPane.setResizeWeight(0.7);
         splitPane.setDividerLocation(0.7);
         splitPane.setDividerSize(1);
+        splitPane.setEnabled(false);
         screen.add(splitPane, BorderLayout.CENTER);
+
+        screen.addComponentListener(new ComponentAdapter() {
+
+            @Override
+            public void componentResized(ComponentEvent e) {
+
+                int newHeight = screen.getHeight();
+                int topPanelHeight = (int) (newHeight * 0.7);
+                splitPane.setDividerLocation(topPanelHeight);
+
+            }
+        });
 
     }
     private void initializeInput() {
