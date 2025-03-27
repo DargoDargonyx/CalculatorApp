@@ -200,7 +200,7 @@ public class ArithmeticScreen implements Screen {
 
     public String calculateString() {
         
-        
+        return "";
 
     }
 
