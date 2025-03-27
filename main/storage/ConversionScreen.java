@@ -2,9 +2,14 @@ package storage;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.border.Border;
@@ -19,9 +24,10 @@ import javax.swing.border.Border;
  */
 public class ConversionScreen {
     
-    private JPanel screen;
+    private final JPanel screen;
     private JPanel inputPanel;
     private JPanel outputPanel;
+    private JPanel sideBarPanel;
     private Border border;
 
     public ConversionScreen() {
@@ -31,6 +37,7 @@ public class ConversionScreen {
         border = BorderFactory.createLineBorder(Color.BLACK, 2);
         screen.setBorder(border);
         initializeInnerPanels();
+        
 
     }
     public JPanel getScreen() {
@@ -42,25 +49,73 @@ public class ConversionScreen {
 
         initializeInput();
         initializeOutput();
+        initializeSideBar();
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, inputPanel, outputPanel);
-        splitPane.setResizeWeight(0.7);
-        splitPane.setDividerLocation(0.7);
-        splitPane.setDividerSize(1);
-        splitPane.setEnabled(false);
-        screen.add(splitPane, BorderLayout.CENTER);
+        JSplitPane firstPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, inputPanel, outputPanel);
+        firstPane.setResizeWeight(0.7);
+        firstPane.setDividerLocation(0.7);
+        firstPane.setDividerSize(1);
+        firstPane.setEnabled(false);
+
+        JSplitPane secondPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, firstPane, sideBarPanel);
+        secondPane.setResizeWeight(0.7);
+        secondPane.setDividerLocation(0.7);
+        secondPane.setDividerSize(1);
+        secondPane.setEnabled(false);
+
+        JButton toggleButton = new JButton("Hide Sidebar");
+        int buttonHeight = (int) (inputPanel.getHeight() * 0.25);
+        int buttonWidth = (int) (inputPanel.getWidth() * 0.4);
+        toggleButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
 
         screen.addComponentListener(new ComponentAdapter() {
-
             @Override
             public void componentResized(ComponentEvent e) {
 
                 int newHeight = screen.getHeight();
                 int topPanelHeight = (int) (newHeight * 0.7);
-                splitPane.setDividerLocation(topPanelHeight);
+                firstPane.setDividerLocation(topPanelHeight);
+
+                int newWidth = screen.getWidth();
+                int firstPaneWidth = (int) (newWidth * 0.7);
+                secondPane.setDividerLocation(firstPaneWidth);
+
+                int buttonHeight = (int) (inputPanel.getHeight() * 0.25);
+                int buttonWidth = (int) (inputPanel.getWidth() * 0.4);
+                toggleButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
 
             }
         });
+
+        toggleButton.addActionListener(new ActionListener() {
+            
+            private boolean sideBarVisible = true;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (sideBarVisible) {
+                    
+                    secondPane.setDividerLocation(1.0);
+                    toggleButton.setText("Show Sidebar");
+
+                }
+                else {
+
+                    int newWidth = screen.getWidth();
+                    int firstPaneWidth = (int) (newWidth * 0.7);
+                    secondPane.setDividerLocation(firstPaneWidth);
+                    toggleButton.setText("Hide Sidebar");
+
+                }
+                sideBarVisible = !sideBarVisible;
+
+            }
+
+        });
+
+        inputPanel.add(toggleButton, BorderLayout.LINE_END);
+        screen.add(secondPane, BorderLayout.CENTER);
 
     }
     private void initializeInput() {
@@ -80,6 +135,13 @@ public class ConversionScreen {
 
         border = BorderFactory.createLineBorder(Color.BLUE, 1);
         outputPanel.setBorder(border);
+
+    }
+
+    private void initializeSideBar() {
+
+        sideBarPanel = new JPanel();
+        sideBarPanel.add(new JLabel("Sidebar Content"));
 
     }
 
