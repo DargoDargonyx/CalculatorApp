@@ -2,7 +2,6 @@ package storage;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -26,7 +25,10 @@ public class ConversionScreen {
     private final JPanel screen;
     private JPanel inputPanel;
     private JPanel outputPanel;
-    private JPanel sideBarPanel;
+    private JSplitPane totalPane;
+    private JSplitPane leftPane;
+    private JSplitPane rightPane;
+    private JPanel buttonPanel;
     private Border border;
     private boolean sideBarVisible;
 
@@ -43,8 +45,7 @@ public class ConversionScreen {
         border = BorderFactory.createLineBorder(Color.BLACK, 2);
         screen.setBorder(border);
         initializeInnerPanels();
-        
-
+    
     }
 
     /**
@@ -68,101 +69,49 @@ public class ConversionScreen {
     private void initializeInnerPanels() {
 
         // Initializes the original panels
-        initializeInput();
-        initializeOutput();
+        initializeInputOutput();
         initializeSideBar();
+        
+        // Makes a total pane from combining the previous panes
+        totalPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane, rightPane);
+        totalPane.setResizeWeight(0.7);
+        totalPane.setDividerLocation(0.7);
+        totalPane.setDividerSize(1);
+        totalPane.setEnabled(false);
 
-        // Makes a vertical split pane out of teh input and output panels
-        JSplitPane firstPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, inputPanel, outputPanel);
-        firstPane.setResizeWeight(0.7);
-        firstPane.setDividerLocation(0.7);
-        firstPane.setDividerSize(1);
-        firstPane.setEnabled(false);
-
-        // Makes a horizontal split pane out of the first split pane and the sidebar
-        JSplitPane secondPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, firstPane, sideBarPanel);
-        secondPane.setResizeWeight(0.7);
-        secondPane.setDividerLocation(0.7);
-        secondPane.setDividerSize(1);
-        secondPane.setEnabled(false);
-        sideBarVisible = true;
-
-        // Makes the toggle button for the sidebar
-        JButton toggleButton = new JButton("Hide Sidebar");
-        int buttonHeight = (int) (inputPanel.getHeight() * 0.25);
-        int buttonWidth = (int) (inputPanel.getWidth() * 0.4);
-        toggleButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
-
+        // Adds an action listener to the screen to check for the resizing of the screen
         screen.addComponentListener(new ComponentAdapter() {
-            
-            /**
-             * This is the action lsitener for when the screen gets
-             * resized by the user.
-             * 
-             */
+
             @Override
             public void componentResized(ComponentEvent e) {
-
 
                 // Readjusts the input and output panels
                 int newHeight = screen.getHeight();
                 int topPanelHeight = (int) (newHeight * 0.7);
-                firstPane.setDividerLocation(topPanelHeight);
+                leftPane.setDividerLocation(topPanelHeight);
 
-                // Readjusts the wdith of the screen
+                // Readjusts the width of the screen
                 int newWidth = screen.getWidth();
 
-                // Makes sure that the sidebar stays the way that it's toggled
                 if (sideBarVisible) {
-
-                    int firstPaneWidth = (int) (newWidth * 0.7);
-                    secondPane.setDividerLocation(firstPaneWidth);
+                    
+                    totalPane.setDividerLocation(0.7);
+                    rightPane.setDividerLocation(0.15);
 
                 }
                 else {
 
-                    secondPane.setDividerLocation(newWidth);
+                    int leftPaneWidth = newWidth - buttonPanel.getWidth();
+                    totalPane.setDividerLocation(leftPaneWidth);
+                    rightPane.setDividerLocation(1.0);
 
                 }
                 
-                // Readjusts the toggle button size
-                int buttonHeight = (int) (inputPanel.getHeight() * 0.25);
-                int buttonWidth = (int) (inputPanel.getWidth() * 0.4);
-                toggleButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
 
             }
         });
 
-        /**
-         * This is the action listener for the toggle button
-         * used to hide and show the sidebar.
-         * 
-         */
-        toggleButton.addActionListener((@SuppressWarnings("unused") ActionEvent e) -> {
-
-            if (sideBarVisible) {
-                
-                // This makes the sidebar dissapear
-                secondPane.setDividerLocation(1.0);
-                toggleButton.setText("Show Sidebar");
-                
-            }
-            else {
-                
-                // This makes the sidebar reappear
-                int newWidth = screen.getWidth();
-                int firstPaneWidth = (int) (newWidth * 0.7);
-                secondPane.setDividerLocation(firstPaneWidth);
-                toggleButton.setText("Hide Sidebar");
-                
-            }
-            sideBarVisible = !sideBarVisible;
-
-        });
-
-        // This adds the panels together and then to the screen
-        inputPanel.add(toggleButton, BorderLayout.LINE_END);
-        screen.add(secondPane, BorderLayout.CENTER);
+        screen.add(totalPane, BorderLayout.CENTER);
 
     }
 
@@ -170,28 +119,24 @@ public class ConversionScreen {
      * This method initializes the input panel.
      * 
      */
-    private void initializeInput() {
+    private void initializeInputOutput() {
 
         inputPanel = new JPanel();
         inputPanel.setName("inputPanel");
-
         border = BorderFactory.createLineBorder(Color.BLUE, 1);
         inputPanel.setBorder(border);
-        
-    }
-
-    /**
-     * This method initializes the output panel.
-     * 
-     */
-    private void initializeOutput() {
 
         outputPanel = new JPanel();
         outputPanel.setName("outputPanel");
-
         border = BorderFactory.createLineBorder(Color.BLUE, 1);
         outputPanel.setBorder(border);
 
+        leftPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, inputPanel, outputPanel);
+        leftPane.setResizeWeight(0.7);
+        leftPane.setDividerLocation(0.7);
+        leftPane.setDividerSize(1);
+        leftPane.setEnabled(false);
+        
     }
 
     /**
@@ -200,8 +145,46 @@ public class ConversionScreen {
      */
     private void initializeSideBar() {
 
-        sideBarPanel = new JPanel();
+        JPanel sideBarPanel = new JPanel();
         sideBarPanel.add(new JLabel("Sidebar Content"));
+
+        buttonPanel = new JPanel(new BorderLayout());
+        JButton toggleButton = new JButton(">");
+        buttonPanel.add(toggleButton, BorderLayout.CENTER);
+
+        rightPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buttonPanel, sideBarPanel);
+        rightPane.setDividerLocation(0.15);
+        rightPane.setDividerSize(1);
+        rightPane.setEnabled(false);
+        sideBarVisible = true;
+
+        /**
+        * This is the action listener for the toggle button
+        * used to hide and show the sidebar.
+        * 
+        */
+        toggleButton.addActionListener((@SuppressWarnings("unused") ActionEvent e) -> {
+
+            if (sideBarVisible) {
+                
+                // This makes the sidebar dissapear
+                totalPane.setDividerLocation(totalPane.getWidth() - buttonPanel.getWidth());
+                rightPane.setDividerLocation(rightPane.getWidth());
+                toggleButton.setText("<");
+                
+            }
+            else {
+                
+                // This makes the sidebar appear
+                totalPane.setDividerLocation(0.7);
+                int newWidth = (int) (rightPane.getWidth() * 0.15);
+                rightPane.setDividerLocation(newWidth);
+                toggleButton.setText(">");
+                
+            }
+            sideBarVisible = !sideBarVisible;
+
+        });
 
     }
 
