@@ -3,8 +3,6 @@ package storage;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -79,38 +77,6 @@ public class ConversionScreen {
         totalPane.setDividerSize(1);
         totalPane.setEnabled(false);
 
-        // Adds an action listener to the screen to check for the resizing of the screen
-        screen.addComponentListener(new ComponentAdapter() {
-
-            @Override
-            public void componentResized(ComponentEvent e) {
-
-                // Readjusts the input and output panels
-                int newHeight = screen.getHeight();
-                int topPanelHeight = (int) (newHeight * 0.7);
-                leftPane.setDividerLocation(topPanelHeight);
-
-                // Readjusts the width of the screen
-                int newWidth = screen.getWidth();
-
-                if (sideBarVisible) {
-                    
-                    totalPane.setDividerLocation(0.7);
-                    rightPane.setDividerLocation(0.15);
-
-                }
-                else {
-
-                    int leftPaneWidth = newWidth - buttonPanel.getWidth();
-                    totalPane.setDividerLocation(leftPaneWidth);
-                    rightPane.setDividerLocation(1.0);
-
-                }
-                
-
-            }
-        });
-
         screen.add(totalPane, BorderLayout.CENTER);
 
     }
@@ -122,19 +88,15 @@ public class ConversionScreen {
     private void initializeInputOutput() {
 
         inputPanel = new JPanel();
-        inputPanel.setName("inputPanel");
-        border = BorderFactory.createLineBorder(Color.BLUE, 1);
-        inputPanel.setBorder(border);
+        inputPanel.setBackground(new Color(211, 211, 211));
 
         outputPanel = new JPanel();
-        outputPanel.setName("outputPanel");
-        border = BorderFactory.createLineBorder(Color.BLUE, 1);
-        outputPanel.setBorder(border);
+        outputPanel.setBackground(new Color(169, 169, 169));
 
         leftPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, inputPanel, outputPanel);
         leftPane.setResizeWeight(0.7);
         leftPane.setDividerLocation(0.7);
-        leftPane.setDividerSize(1);
+        leftPane.setDividerSize(0);
         leftPane.setEnabled(false);
         
     }
@@ -147,14 +109,16 @@ public class ConversionScreen {
 
         JPanel sideBarPanel = new JPanel();
         sideBarPanel.add(new JLabel("Sidebar Content"));
+        sideBarPanel.setBackground(new Color(140, 140, 140));
 
         buttonPanel = new JPanel(new BorderLayout());
+        buttonPanel.setBackground(new Color(0, 0, 0));
         JButton toggleButton = new JButton(">");
         buttonPanel.add(toggleButton, BorderLayout.CENTER);
 
         rightPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buttonPanel, sideBarPanel);
         rightPane.setDividerLocation(0.15);
-        rightPane.setDividerSize(1);
+        rightPane.setDividerSize(0);
         rightPane.setEnabled(false);
         sideBarVisible = true;
 
