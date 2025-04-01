@@ -7,14 +7,43 @@ public class ArrayStack<T> {
 
     public ArrayStack() {
         manyItems = 0;
+        data = new Object[0];
     }
 
-    public T pop(int index) {
-        Object[] newData = new Object[manyItems];
+    public T push(T item) {
+        Object[] newData = new Object[getLength() + 1];
+        System.arraycopy(data, 0, newData, 0, getLength());
+        newData[getLength()] = item;
+        data = newData;
 
-        if (index < manyItems) {
-            System.arraycopy(data, 0, newData, index, index);
-            System.arraycopy(data, index + 1, newData, manyItems);
+        manyItems++;
+        return item;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T pop() {
+        Object[] newData = new Object[getLength()];
+        T dataToPop = (T) data[getLength()];
+
+        if (getLength() > 0) 
+            System.arraycopy(data, 0, newData, 0, getLength() - 1);
+        data = newData;
+        return dataToPop;
+    }
+
+    public int getLength() {
+        return manyItems;
+    }
+
+    public String toString() {
+        String str = "<";
+        for (int i = 0; i < getLength(); i++) {
+            if (i == getLength() - 1) {
+                str += data[i];
+            }
+            else str += data[i] + ", ";
         }
+        str += ">";
+        return str;
     }
 }

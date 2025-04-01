@@ -6,15 +6,18 @@
  * @version 03.24.25
  */
 package demo;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 
 import storage.FrameWork;
+import storage.ArrayStack;
 
 public class TencianityTest {
-    public static void main (String[] args) throws ScriptException {
-        openCalculator(1);
+    public static void main (String[] args)  {
+        ArrayStack<Integer> s = new ArrayStack<Integer>();
+        s.push(2);
+        s.push(5);
+        s.push(2);
+        System.out.println(s);
+        // openCalculator(1);
     }
 
     public static void openCalculator(int tabs) {
