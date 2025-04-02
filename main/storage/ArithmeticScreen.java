@@ -1,24 +1,22 @@
 package storage;
-import javax.script.Compilable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 /**
@@ -31,7 +29,7 @@ import java.awt.event.ActionListener;
  */
 
 public class ArithmeticScreen implements Screen {
-    private  static String NAME = "Arithmetic Calculator";
+    private  static final String NAME = "Arithmetic Calculator";
 
     private JPanel mainPanel;
     private JPanel inputJPanel;
@@ -68,43 +66,45 @@ public class ArithmeticScreen implements Screen {
         // Create main panel and set name to Arithmetic Panel
         mainPanel = new JPanel();
         mainPanel.setName("Arithmetic Panel");
-
+        mainPanel.setLayout(new GridBagLayout());
+        
     }
-
+    
     private void initializeSubPanels() {
-
+        
         // Create input panel
         inputJPanel = new JPanel();
         inputJPanel.setName("inputPanel");
-
+        
         // Add black border around input panel
-        Border inputBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
+        Border inputBorder = BorderFactory.createLineBorder(Color.BLACK, 1, true);
         inputJPanel.setBorder(inputBorder);
-
+        
         // Create JTextField and add to inputJPanel
         inputJTextField = new JTextField(10);
         inputJPanel.add(inputJTextField);
-
+        
         // Create output panel
         outputJPanel = new JPanel();
         outputJPanel.setName("outputPanel");
-
+        
         // Add yellow background to output panel
         outputJPanel.setBackground(Color.YELLOW);
-
+        
         // Create result label and add to outputJPanel
         resultJLabel = new JLabel(resultPreamble);
         outputJPanel.add(resultJLabel);
-
+        
         // Add all subpanels to main panel
         mainPanel.add(inputJPanel);
         mainPanel.add(outputJPanel);
-
+        
     }
-
+    
     @SuppressWarnings("static-access")
     private void initializeButtons() {
-
+        
+        GridBagConstraints g = new GridBagConstraints();
         
         // Create button panel
         buttonJPanel = new JPanel();
@@ -114,14 +114,12 @@ public class ArithmeticScreen implements Screen {
         biggerJPanel = new JPanel();
         biggerJPanel.setName("biggerPanel");
         biggerJPanel.setLayout(new BoxLayout(biggerJPanel, BoxLayout.Y_AXIS));
-
-        GridBagConstraints g = new GridBagConstraints();
         
         /* Make 0 - 9 buttons in a for loop creating button objects with name and function
         linked to incrementing variable "i" */
         String num = "";
         for (int i = 1; i <= 10; i++) {
-
+            
             // Create "0" button when i is 10 so it is the last button created and placed into panel
             if (i == 10) {
                 num = "0";
@@ -129,14 +127,14 @@ public class ArithmeticScreen implements Screen {
             else {
                 num = Integer.toString(i);
             }
-
+            
             // Create new button with String num as the label
             JButton button = new JButton(num);
-
+            
             /* Have to do this shit for some reason to be able to use the num variable in the addActionListener class;
             Compilation error otherwise, but just sets a new variable called "numb" equal to the variable "num" */
             String numb = num;
-
+            
             button.addActionListener(new ActionListener() {
                 /**
                  * Action of pressing each button pastes its number (0-9) to the inputJTextField
@@ -159,6 +157,7 @@ public class ArithmeticScreen implements Screen {
             else {
                 buttonJPanel.add(button, g); // Add created button to buttonJPanel
             }
+
         }
 
         operatorJPanel = new JPanel();
@@ -174,7 +173,7 @@ public class ArithmeticScreen implements Screen {
         // "=" Button
         JButton equalsButton = new JButton();
         equalsButton.setName("Equals");
-        equalsButton.setText("Equals");
+        equalsButton.setText("=");
         equalsButton.addActionListener(new ActionListener() {
 
             /**

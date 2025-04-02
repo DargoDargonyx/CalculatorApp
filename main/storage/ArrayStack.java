@@ -11,24 +11,37 @@ public class ArrayStack<T> {
     }
 
     public T push(T item) {
-        Object[] newData = new Object[getLength() + 1];
-        System.arraycopy(data, 0, newData, 0, getLength());
-        newData[getLength()] = item;
-        data = newData;
-
-        manyItems++;
-        return item;
+        try {
+            Object[] newData = new Object[getLength() + 1];
+            System.arraycopy(data, 0, newData, 0, getLength());
+            newData[getLength()] = item;
+            data = newData;
+    
+            manyItems++;
+            return item;
+            
+        } catch (Exception e) {
+            System.out.println("Exception in line 24 of Storage.ArrayStack.java");
+            return null;
+        }
     }
 
     @SuppressWarnings("unchecked")
     public T pop() {
-        Object[] newData = new Object[getLength()];
-        T dataToPop = (T) data[getLength()];
+        try {
+            Object[] newData = new Object[getLength() - 1];
+            T dataToPop = (T) data[getLength() - 1];
+    
+            if (getLength() > 0) 
+                System.arraycopy(data, 0, newData, 0, getLength() - 1);
+            data = newData;
+            manyItems--;
+            return dataToPop;
 
-        if (getLength() > 0) 
-            System.arraycopy(data, 0, newData, 0, getLength() - 1);
-        data = newData;
-        return dataToPop;
+        } catch (Exception e) {
+            System.out.println("Exception in line 42 of Storage.ArrayStack.java");
+            return null;
+        }
     }
 
     public int getLength() {
@@ -38,10 +51,10 @@ public class ArrayStack<T> {
     public String toString() {
         String str = "<";
         for (int i = 0; i < getLength(); i++) {
-            if (i == getLength() - 1) {
-                str += data[i];
-            }
+
+            if (i == getLength() - 1) str += data[i];
             else str += data[i] + ", ";
+            
         }
         str += ">";
         return str;
