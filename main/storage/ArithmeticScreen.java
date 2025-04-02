@@ -17,6 +17,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Scanner;
 /**
  * FrameArithmetic.java
  * Calculator Framework
@@ -207,39 +208,73 @@ public class ArithmeticScreen implements Screen {
      */
     public String calculateString() {
         String text = inputJTextField.getText();
-        char[] c = new char[text.length()];
+        Scanner scan = new Scanner(text);
 
-        // Copy each character from inputJTextField into an array of chars
-        // for easy iteration.
-        text.getChars(0, text.length(), c, 0);
+
 
         ArrayStack<Double> numArrayStack = new ArrayStack<>();
-        for (char num : c) {
+        while (scan.hasNext()) {
+            
             try {
-                // Push each number to an arraystack
-                numArrayStack.push(charToDouble(num));
+                numArrayStack.push(scan.nextDouble());
             } catch (Exception e) {
-                switch (num) {
-                    case '+': // sum
-                        break;
-                    case '-': // subtract
-                        break;
-                    case '*': // multiply
-                        break;
-                    case '/': // divide
-                        break;
-                    case '^': // exponentiate
-                        break;
-                    default:
-                        System.out.println("Invalid operand: " + num);
-                        return "Null";
+                switch (scan.nextLine()) {
+                    case "+":
+
                 }
             }
+
         }
-        
-        return "";
+
+        System.out.println(numArrayStack);
+        System.out.print("[");
+        for (String str : formatEquation(text)) {
+            System.out.print(str + " ");
+        }
+        System.out.println("]");
+
+        return numArrayStack.toString();
 
     }
+
+    public String[] formatEquation(String equation) {
+
+        String[] splitEquation = new String[equation.length() - 1];
+        boolean operatorFound = true;
+        int index = 0;
+        for (int i = 0; i < equation.length(); i++) {
+            
+            Character c = Character.valueOf(equation.charAt(i));
+            if (c == ' ') continue;
+            if (Character.isDigit(c)) {
+                if (operatorFound == true) {
+                    operatorFound = false;
+                    splitEquation[index] = c.toString();
+                }
+                else {
+                    splitEquation[index] += c.toString();
+                }
+            }
+            else {
+                operatorFound = true;
+                index += 1;
+                splitEquation[index] = c.toString();
+                index += 1;
+            }
+            
+        }
+
+        int numNulls = 0;
+        for (int i = 0; i < splitEquation.length; i++) {
+            if (splitEquation[i] == null) numNulls++;
+        }
+
+        String[] newSplitEquation = new String[splitEquation.length - numNulls];
+        System.arraycopy(splitEquation, 0, newSplitEquation, 0, splitEquation.length - numNulls);
+        return newSplitEquation;
+
+    }
+
     /**
      * Converts a char to a double and returns the double.
      * @param c the character to convert
