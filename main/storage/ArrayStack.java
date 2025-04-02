@@ -48,6 +48,10 @@ public class ArrayStack<T> {
         return manyItems;
     }
 
+    public boolean isEmpty() {
+        return manyItems == 0;
+    }
+
     public String toString() {
         String str = "<";
         for (int i = 0; i < getLength(); i++) {

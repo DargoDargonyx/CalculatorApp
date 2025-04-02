@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,7 +15,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 /**
@@ -66,7 +64,7 @@ public class ArithmeticScreen implements Screen {
         // Create main panel and set name to Arithmetic Panel
         mainPanel = new JPanel();
         mainPanel.setName("Arithmetic Panel");
-        mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setLayout(new BorderLayout());
         
     }
     
@@ -96,8 +94,8 @@ public class ArithmeticScreen implements Screen {
         outputJPanel.add(resultJLabel);
         
         // Add all subpanels to main panel
-        mainPanel.add(inputJPanel);
-        mainPanel.add(outputJPanel);
+        mainPanel.add(inputJPanel, BorderLayout.PAGE_START);
+        mainPanel.add(outputJPanel, BorderLayout.PAGE_END);
         
     }
     
@@ -149,16 +147,16 @@ public class ArithmeticScreen implements Screen {
             // Place the zero button into the bigger panel seperately from the rest of the number panel
             if (i == 10) {
                 biggerJPanel.add(buttonJPanel);
-                button.setSize(new Dimension(123, 26));
-                biggerJPanel.add(button, g.gridy);
-                button.setAlignmentX(biggerJPanel.CENTER_ALIGNMENT); // Align "0" button to the center of biggerJPanel
+                biggerJPanel.add(button, g.gridy); // Place zero button below other numpad buttons
+                button.setAlignmentX(biggerJPanel.CENTER_ALIGNMENT); // Align zero button to the center of biggerJPanel
+                button.setMaximumSize(new Dimension(41, 50));
                 break;
             }
             else {
                 buttonJPanel.add(button, g); // Add created button to buttonJPanel
             }
-
         }
+        buttonJPanel.setMaximumSize(new Dimension(150, 150));
 
         operatorJPanel = new JPanel();
         operatorJPanel.setName("operatorPanel");
@@ -168,12 +166,14 @@ public class ArithmeticScreen implements Screen {
         // "*" Button
         // "/" Button
 
-        // "power (exponent)" Button
+        // "^" (Power) Button
 
         // "=" Button
+
         JButton equalsButton = new JButton();
         equalsButton.setName("Equals");
         equalsButton.setText("=");
+        equalsButton.setMaximumSize(new Dimension(41, 50));
         equalsButton.addActionListener(new ActionListener() {
 
             /**
@@ -187,9 +187,10 @@ public class ArithmeticScreen implements Screen {
             }
 
         });
+        operatorJPanel.add(equalsButton);
 
-        mainPanel.add(biggerJPanel); // Add biggerJPanel to mainPanel
-        mainPanel.add(equalsButton); // Add equalsButton to mainPanel
+        mainPanel.add(biggerJPanel, BorderLayout.LINE_START); // Add biggerJPanel to mainPanel
+        mainPanel.add(operatorJPanel, BorderLayout.CENTER); // Add equalsButton to mainPanel
     }
 
     /**
@@ -200,7 +201,41 @@ public class ArithmeticScreen implements Screen {
         resultJLabel.setText(resultPreamble + result);
     }
 
+    /**
+     * Calculates the expression in the inputJTextField.
+     * @return the String solution to the expression
+     */
     public String calculateString() {
+        String text = inputJTextField.getText();
+        char[] c = new char[text.length()];
+
+        // Copy each character from inputJTextField into an array of chars
+        // for easy iteration.
+        text.getChars(0, text.length(), c, 0);
+
+        ArrayStack<Double> numArrayStack = new ArrayStack<>();
+        for (char num : c) {
+            try {
+                // Push each number to an arraystack
+                numArrayStack.push(charToDouble(num));
+            } catch (Exception e) {
+                switch (num) {
+                    case '+': // sum
+                        break;
+                    case '-': // subtract
+                        break;
+                    case '*': // multiply
+                        break;
+                    case '/': // divide
+                        break;
+                    case '^': // exponentiate
+                        break;
+                    default:
+                        System.out.println("Invalid operand: " + num);
+                        return "Null";
+                }
+            }
+        }
         
         return "";
 
