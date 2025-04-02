@@ -177,7 +177,7 @@ public class ArithmeticScreen implements Screen {
         equalsButton.addActionListener(new ActionListener() {
 
             /**
-             * 
+             * Updates the result label to display the calculated solution to the equation.
              * @param event Button is pressed
              */
             public void actionPerformed(ActionEvent event) {
@@ -192,6 +192,9 @@ public class ArithmeticScreen implements Screen {
         mainPanel.add(equalsButton); // Add equalsButton to mainPanel
     }
 
+    /**
+     * Updates the result label to display the calculated solution to the equation.
+     */
     public void updateResult() {
         result = calculateString();
         resultJLabel.setText(resultPreamble + result);
@@ -202,7 +205,11 @@ public class ArithmeticScreen implements Screen {
         return "";
 
     }
-
+    /**
+     * Converts a char to a double and returns the double.
+     * @param c the character to convert
+     * @return double respresentation of the char
+     */
     public Double charToDouble(char c)
     {
         return Double.parseDouble(String.valueOf(c));
